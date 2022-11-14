@@ -1,15 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import  helmet from 'helmet';
-import * as csurf from 'csurf';
 import { Logger } from '@nestjs/common';
 import rateLimit from 'express-rate-limit';
+import * as fs from 'fs'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // const httpsOptions = {
+  //   key: fs.readFileSync('./secret/key.pem'),
+  //   cert: fs.readFileSync('./secret/certificate.pem'),
+  // }
+  const app = await NestFactory.create(AppModule,{
+    // httpsOptions
+    }
+  );
 
   //using helmet to protect against some known vulnerabilities
-  app.use(helmet)
+  app.use(helmet())
 
   const options = {
     origin:'*', //[arr of origins]
@@ -18,9 +25,6 @@ async function bootstrap() {
 
   //enabling cors
   app.enableCors(options)
-
-  //Server side request forgery protector
-  app.use(csurf)
 
   app.use(
     rateLimit({
