@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import {MongooseModule} from '@nestjs/mongoose'
+import { UserModule } from './user/user.module';
+import { ResponseHandlerModule } from './response-handler/response-handler.module';
 
 
 @Module({
@@ -10,7 +12,9 @@ import {MongooseModule} from '@nestjs/mongoose'
     ConfigModule.forRoot({
       isGlobal:true
     }),
-    MongooseModule.forRoot(process.env.MONGO_STRING || '')
+    MongooseModule.forRoot(process.env.MONGO_STRING || ''),
+    UserModule,
+    ResponseHandlerModule
   ],
   controllers: [AppController],
   providers: [AppService],
