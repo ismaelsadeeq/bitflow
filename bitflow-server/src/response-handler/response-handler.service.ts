@@ -12,7 +12,7 @@ export class ResponseHandlerService {
   }
 
   public responseBody(status:boolean,message:string,data){
-    if(data) this.data = data;
+    this.data = data;
     this.status = status;
     this.message = message;
     return {status:this.status,message:this.message,data:this.data}
